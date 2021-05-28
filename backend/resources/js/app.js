@@ -12,16 +12,7 @@ createApp({
     render: () =>
         h(InertiaApp, {
             initialPage: JSON.parse(el.dataset.page),
-            // resolveComponent: (name) => require(`./Pages/${name}`).default,
-            // この下のように書き換え
-            resolveComponent: name => import(`./Pages/${name}`)
-            .then(({ default: page }) => {
-                if (page.layout === undefined) {
-                    page.layout = Layout
-                }
-                return page
-            }),
-            
+            resolveComponent: (name) => require(`./Pages/${name}`).default,
         }),
 })
     .mixin({ methods: { route } })

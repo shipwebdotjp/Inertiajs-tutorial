@@ -1,14 +1,16 @@
 <template>
-    <div>
+    <layout>
         Hello World!
-    </div>
+    </layout>
 </template>
 
 <script>
-    //import HelloDashBoardLayout from '@/Pages/HelloDashBoard'
+        import Layout from '@/Pages/Layout'
 
     export default {
-        //layout: HelloDashBoardLayout,
+        components: {
+            Layout,
+        },
         mounted: function(){
             document.title = "HelloWorld!";
         }
