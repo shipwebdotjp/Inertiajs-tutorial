@@ -5,9 +5,9 @@
             <inertia-link href="/HelloWorld" class="text-blue-700 underline m-2">HelloWorld</inertia-link>
             <inertia-link :href="route('bookmark.index')" class="text-blue-700 underline m-2">ブックマーク一覧</inertia-link>
             <input type=text name=search v-model="searchWord" size=15 class="p-1 m-1 text-sm" />
-            <inertia-link as="button" method="get" :href="route('bookmark.search',{queryWord: searchWord})" class="border border-gray-400 m-1 p-1 text-sm">ブックマーク検索</inertia-link>
+            <inertia-link as="button" method="get" :href="route('bookmark.search',{queryWord: searchWord})" preserve-state class="border border-gray-400 m-1 p-1 text-sm">ブックマーク検索</inertia-link>
         </header>
-        <article>
+        <article class="max-w-screen-sm">
             <slot />
         </article>
     </html>
