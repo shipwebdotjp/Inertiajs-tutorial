@@ -5,22 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Bookmark;
+use Illuminate\Support\Facades\Validator;
 
 class BookmarkController extends Controller
 {
-/*
-    private $bookmarks = [
-        [
-            'title' => 'SOHO MIND',
-            'url' => 'https://blog.shipweb.jp/',
-        ],
-        [
-            'title' => 'Youtube Checker',
-            'url' => 'https://ytc.shipweb.jp/',
-        ],
-    ];
-*/
-    //    
+    //一覧表示
     public function index () 
     {
         return Inertia::render('Bookmark/Index',['bookmarks' => fn() => Bookmark::all()]);
@@ -29,42 +18,30 @@ class BookmarkController extends Controller
     //検索メソッド
     public function search ($queryWord) 
     {
-/*
-        $queriedBookmarks = [];
-        foreach($this->bookmarks as $bookmark){
-            if(strpos($bookmark['title'],$queryWord) !== false || strpos($bookmark['url'],$queryWord) !== false ){
-                $queriedBookmarks[] = $bookmark;
-            }
-        }
-*/
         return Inertia::render('Bookmark/Index',[
             'bookmarks' => Bookmark::Where(
-                                'title', 'like', '%'.$queryWord.'%'
-                            )->orWhere(
-                                'url', 'like', '%'.$queryWord.'%'
-                            )->get()
+                'title', 'like', '%'.$queryWord.'%'
+            )->orWhere(
+                'url', 'like', '%'.$queryWord.'%'
+            )->get()
         ]);
-
     }
 
     //追加メソッド
     public function store (Request $request) 
     {
-/*
-        $this->bookmarks[] = [
-            'title' => $request->title,
-            'url' => $request->url,
-        ];
-*/
+        $validator = Validator::make($request->all(), [
+            'title' => ['required', 'string', 'max:255'],
+            'url' => ['required', 'url', 'max:255', 'unique:App\Models\Bookmark,url'],
+        ])->validate();
+
         $bookmark = new Bookmark;
         $bookmark->title = $request->title;
         $bookmark->url = $request->url;
         $bookmark->save();
 
         return redirect()->route('bookmark.index', $parameters = [], $status = 303, $headers = []);
-
     }
-    
 
     //削除メソッド
     public function destroy ($id) 

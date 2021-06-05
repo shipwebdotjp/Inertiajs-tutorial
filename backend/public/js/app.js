@@ -17910,16 +17910,82 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       newTitle: '',
-      newUrl: ''
+      newUrl: '',
+      status: null,
+      cancelToken: null
     };
   },
   props: {
     bookmarks: {
       type: Array
+    },
+    errors: {
+      type: Object
     }
   },
   mounted: function mounted() {
     document.title = "ブックマーク一覧";
+  },
+  computed: {
+    bookmarkError: function bookmarkError() {
+      return this.$page.props.errors['addBookmark'] || {};
+    }
+  },
+  methods: {
+    addBookmark: function addBookmark(event) {
+      var _this = this;
+
+      this.$inertia.visit(route('bookmark.store'), {
+        method: 'post',
+        //POSTメソッドで送信
+        data: {
+          title: this.newTitle,
+          //送信データを指定
+          url: this.newUrl
+        },
+        errorBag: 'addBookmark',
+        //エラーバッグ名を指定
+        preserveState: function preserveState(page) {
+          //フォームの内容を保持するかどうか
+          return Object.keys(page.props.errors).length != 0; //エラーがあればフォームの内容を保持する
+        },
+        preserveScroll: true,
+        //スクロールポジションを維持する
+        onCancelToken: function onCancelToken(cancelToken) {
+          return _this.cancelToken = cancelToken;
+        },
+        //キャンセルトークンが発行されたらキャンセルトークンを保存
+        onBefore: function onBefore(visit) {
+          return confirm('追加しますか？');
+        },
+        //リクエスト送信前に確認ダイアログを表示し、その結果に応じて続行・キャンセル
+        onStart: function onStart(visit) {
+          console.log(visit);
+        },
+        //リクエスト開始時に
+        onProgress: function onProgress(progress) {
+          console.log(progress);
+        },
+        //リクエスト進行中
+        onSuccess: function onSuccess(page) {
+          console.log(page);
+        },
+        //リクエスト成功時
+        onError: function onError(errors) {
+          console.log(errors);
+        },
+        //エラー発生時
+        onCancel: function onCancel() {
+          console.log('onCancel');
+        },
+        //リクエストキャンセル時
+        onFinish: function onFinish(visit) {
+          _this.cancelToken = null;
+          console.log('onFinish');
+        } //リクエスト完了時。成功、エラー、キャンセルそれぞれのコールバック実行後に呼び出される
+
+      });
+    }
   }
 });
 
@@ -18010,6 +18076,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       searchWord: ''
     };
+  },
+  methods: {
+    search: function search(event) {
+      this.$inertia.visit(route('bookmark.search', this.searchWord), {
+        only: ['bookmarks']
+      });
+    }
   }
 });
 
@@ -21800,7 +21873,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 );
 
 var _hoisted_7 = {
-  "class": "flex w-60"
+  "class": "flex w-full"
 };
 
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
@@ -21813,21 +21886,26 @@ var _hoisted_9 = {
   "class": "w-40"
 };
 var _hoisted_10 = {
-  "class": "flex w-60"
+  key: 0,
+  "class": "p-1 m-1 text-sm text-red-400"
+};
+var _hoisted_11 = {
+  "class": "flex w-full"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "w-20 text-right bg-gray-200 text-sm p-1 m-1"
 }, "URL", -1
 /* HOISTED */
 );
 
-var _hoisted_12 = {
+var _hoisted_13 = {
   "class": "w-40"
 };
-
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("ブックマーク追加");
-
+var _hoisted_14 = {
+  key: 0,
+  "class": "p-1 m-1 text-sm text-red-400"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
@@ -21880,39 +21958,39 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return _ctx.newTitle = $event;
         }),
         size: "15",
-        "class": "p-1 m-1 text-sm w-full"
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.newTitle]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+        "class": ["p-1 m-1 text-sm w-full", {
+          'border-red-300': $options.bookmarkError['title']
+        }]
+      }, null, 2
+      /* CLASS */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.newTitle]])]), $options.bookmarkError['title'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.bookmarkError['title']), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "text",
         name: "newUrl",
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return _ctx.newUrl = $event;
         }),
         size: "15",
-        "class": "p-1 m-1 text-sm w-full"
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.newUrl]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
-        as: "button",
-        method: "post",
-        href: _ctx.route('bookmark.store'),
-        data: {
-          title: _ctx.newTitle,
-          url: _ctx.newUrl
-        },
-        "preserve-state": "",
-        "class": "border border-gray-400 m-1 p-1 text-sm"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_13];
+        "class": ["p-1 m-1 text-sm w-full", {
+          'border-red-300': $options.bookmarkError['url']
+        }]
+      }, null, 2
+      /* CLASS */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.newUrl]])]), $options.bookmarkError['url'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.bookmarkError['url']), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        onClick: _cache[3] || (_cache[3] = function () {
+          return $options.addBookmark && $options.addBookmark.apply($options, arguments);
         }),
-        _: 1
-        /* STABLE */
-
-      }, 8
-      /* PROPS */
-      , ["href", "data"])];
+        "class": "border border-gray-400 m-1 p-1 text-sm"
+      }, "ブックマーク追加"), _ctx.cancelToken ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+        key: 0,
+        onClick: _cache[4] || (_cache[4] = function ($event) {
+          return _ctx.cancelToken.cancel();
+        }),
+        "class": "border border-red-300 m-1 p-1 text-sm"
+      }, "キャンセル")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1
     /* STABLE */
@@ -22060,9 +22138,7 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("ブックマーク一覧");
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("ブックマーク検索");
-
-var _hoisted_6 = {
+var _hoisted_5 = {
   "class": "max-w-screen-sm"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -22110,24 +22186,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "p-1 m-1 text-sm"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.searchWord]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
-    as: "button",
-    method: "get",
-    href: _ctx.route('bookmark.search', {
-      queryWord: _ctx.searchWord
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.searchWord]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[2] || (_cache[2] = function () {
+      return $options.search && $options.search.apply($options, arguments);
     }),
-    "preserve-state": "",
     "class": "border border-gray-400 m-1 p-1 text-sm"
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_5];
-    }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("article", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")])]);
+  }, "ブックマーク検索")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("article", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")])]);
 }
 
 /***/ }),
