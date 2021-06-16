@@ -39,14 +39,13 @@ class BookmarkController extends Controller
         $bookmark->title = $request->title;
         $bookmark->url = $request->url;
         $bookmark->save();
-
-        return redirect()->route('bookmark.index', $parameters = [], $status = 303, $headers = []);
+        return redirect()->route('bookmark.index');
     }
 
     //削除メソッド
     public function destroy ($id) 
     {
         Bookmark::destroy($id);
-        return redirect()->route('bookmark.index', $parameters = [], $status = 303, $headers = []);
+        return redirect()->route('bookmark.index');
     }
 }
