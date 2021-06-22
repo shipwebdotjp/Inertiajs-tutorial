@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +40,7 @@ Route::post('/Bookmark/store',[App\Http\Controllers\BookmarkController::class, '
 Route::delete('/Bookmark/delete/{id}',[App\Http\Controllers\BookmarkController::class, 'destroy'])->name('bookmark.delete');
 
 Route::resource('/Upload',UploadController::class);
+
+Route::get('/Contact',[App\Http\Controllers\ContactController::class, 'index'])->name('contact.index');
+Route::post('/Contact/confirm',[App\Http\Controllers\ContactController::class, 'confirm'])->name('contact.confirm');
+Route::post('/Contact/send',[App\Http\Controllers\ContactController::class, 'send'])->name('contact.send');
