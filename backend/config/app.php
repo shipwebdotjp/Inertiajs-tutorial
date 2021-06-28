@@ -123,6 +123,9 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'max_bookmarks' => env('MAX_BOOKMARKS'),
+
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

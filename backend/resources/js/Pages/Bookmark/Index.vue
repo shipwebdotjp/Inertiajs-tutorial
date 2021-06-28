@@ -8,9 +8,14 @@
         <ul class="list-disc list-inside p-2">
             <li v-for="bookmark in bookmarks" :key="bookmark.id" class="list-none flex justify-between">
                 <a :href="bookmark.url" target=_blank class="text-blue-700" >{{ bookmark.title }}</a>
-                <inertia-link as="button" method="delete" :href="route('bookmark.delete',bookmark.id)" preserve-scroll :only="['bookmarks']" class="border border-red-400 m-1 p-1 text-sm text-red-400">削除</inertia-link>
+                <inertia-link as="button" method="delete" :href="route('bookmark.delete',bookmark.id)" preserve-scroll :only="['bookmarks','flash']" class="border border-red-400 m-1 p-1 text-sm text-red-400">削除</inertia-link>
             </li>
         </ul>
+        <div class="flex w-full">
+            <progress v-if="$page.props.setting.max_bookmarks" :value="bookmarks.length" :max="$page.props.setting.max_bookmarks" class="w-full flex-grow">{{ bookmarks.length }}</progress>
+            <div class="w-20">{{ bookmarks.length }} / {{ $page.props.setting.max_bookmarks }}</div>
+        </div>
+        <template v-if="bookmarks.length < $page.props.setting.max_bookmarks">
         <form @submit.prevent="submit">
             <h3 class="border-l-4 p-1">ブックマーク追加</h3>
             <div class="flex w-full">
@@ -32,6 +37,10 @@
             <button v-if="form.processing" @click="form.cancel()" type="button" class="border bg-red-200 m-1 p-1 text-sm">送信中止</button>
             <div v-if="form.recentlySuccessful" class="p-1 m-1 bg-green-200">送信が完了しました。</div>
         </form>
+        </template>
+        <template v-else>
+            ブックマークが上限まで追加されています。
+        </template>
     </layout>
 </template>
 
@@ -53,7 +62,7 @@
         props:{
             bookmarks: {
                 type: Array,
-            }
+            },
         },
         mounted: function(){
             document.title = "ブックマーク一覧";

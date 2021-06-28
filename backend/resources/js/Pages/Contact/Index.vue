@@ -57,7 +57,6 @@
             submit() {
                 this.form.post(route('contact.confirm'),{
                     preserveState: true,
-                    onError: () => {console.log(this.errors);}
                 })
             },
         },
