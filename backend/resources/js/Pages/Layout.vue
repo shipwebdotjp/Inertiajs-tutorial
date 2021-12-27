@@ -1,4 +1,5 @@
 <template>
+    <Head :title="title" />
     <header class="bg-gray-100">
         <inertia-link href="/" class="text-blue-700 underline m-2">Home</inertia-link>
         <inertia-link href="/HelloWorld" class="text-blue-700 underline m-2">HelloWorld</inertia-link>
@@ -7,12 +8,16 @@
         <button type=submit class="border border-gray-400 m-1 p-1 text-sm">ブックマーク検索</button>
     </header>
     <article>
-        <slot v-on:title="title=$event" />
+        <slot />
     </article>
+
 </template>
 
 <script>
-  export default {
 
-  }
+    export default {
+        props:{
+            title: String 
+        },
+    }
 </script>

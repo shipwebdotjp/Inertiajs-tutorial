@@ -10,19 +10,22 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "@inertiajs/inertia": "^0.8.4",
-        "@inertiajs/inertia-vue3": "^0.3.5",
-        "@inertiajs/progress": "^0.2.4",
+        "@inertiajs/inertia": "^0.10.1",
+        "@inertiajs/inertia-vue": "^0.7.2",
+        "@inertiajs/progress": "^0.2.6",
         "@tailwindcss/forms": "^0.2.1",
         "@tailwindcss/typography": "^0.3.0",
-        "@vue/compiler-sfc": "^3.0.5",
-        "axios": "^0.21",
-        "laravel-mix": "^6.0.6",
+        "@vue/compiler-sfc": "^3.2.26",
+        "axios": "^0.21.4",
+        "laravel-mix": "^6.0.39",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14",
+        "postcss": "^8.4.5",
         "postcss-import": "^12.0.1",
-        "tailwindcss": "^2.0.1",
-        "vue": "^3.0.5",
-        "vue-loader": "^16.1.2"
+        "tailwindcss": "^2.2.19",
+        "vue": "^3.2.26",
+        "vue-loader": "^16.8.3"
+    },
+    "dependencies": {
+        "@inertiajs/inertia-vue3": "^0.5.2"
     }
 }
