@@ -1,18 +1,31 @@
 <template>
-    <layout>
-        Hello World!
+    <layout v-bind:title="title">
+        <div>
+            Hello World!
+            <button v-on:click="settitle" class="border-gray-700 border rounded p-2">タイトル変更</button>
+        </div>
     </layout>
 </template>
 
 <script>
-        import Layout from '@/Pages/Layout'
+    import Layout from '@/Pages/Layout'
 
     export default {
+        data: function(){
+            return(
+                {
+                    title: "初期タイトル" 
+                }
+            )
+            
+        },
         components: {
             Layout,
         },
-        mounted: function(){
-            document.title = "HelloWorld!";
+        methods :{
+            settitle : function(event){
+                this.title = '変更後のタイトル'
+            }
         }
     }
 </script>
