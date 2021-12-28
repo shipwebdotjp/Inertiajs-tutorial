@@ -3,3 +3,9 @@
 
 # Docker Compose
 .env
+
+# Laravel
+/vendor
+/node_modules
+/public/css
+/public/js
