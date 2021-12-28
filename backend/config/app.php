@@ -234,4 +234,6 @@ return [
 
     ],
 
+    // 最大ブックマーク数
+    'max_bookmarks' => env('MAX_BOOKMARKS'),
 ];
