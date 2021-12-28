@@ -33,3 +33,6 @@ Route::get('/HelloWorld', function () {
 });
 
 Route::get('/Bookmark',[App\Http\Controllers\BookmarkController::class, 'index'])->name('bookmark.index');
+Route::get('/Bookmark/search/{queryWord}',[App\Http\Controllers\BookmarkController::class, 'search'])->where('queryWord', '.*')->name('bookmark.search');
+Route::post('/Bookmark/store',[App\Http\Controllers\BookmarkController::class, 'store'])->name('bookmark.store');
+Route::delete('/Bookmark/delete/{id}',[App\Http\Controllers\BookmarkController::class, 'destroy'])->name('bookmark.delete');
