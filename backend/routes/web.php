@@ -38,3 +38,6 @@ Route::get('/Bookmark/search/{queryWord}',[App\Http\Controllers\BookmarkControll
 Route::post('/Bookmark/store',[App\Http\Controllers\BookmarkController::class, 'store'])->name('bookmark.store');
 Route::delete('/Bookmark/delete/{id}',[App\Http\Controllers\BookmarkController::class, 'destroy'])->name('bookmark.delete');
 Route::resource('/Upload',UploadController::class);
+Route::get('/Contact',[App\Http\Controllers\ContactController::class, 'index'])->name('contact.index');
+Route::post('/Contact/confirm',[App\Http\Controllers\ContactController::class, 'confirm'])->name('contact.confirm');
+Route::post('/Contact/send',[App\Http\Controllers\ContactController::class, 'send'])->name('contact.send');
