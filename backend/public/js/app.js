@@ -20665,16 +20665,82 @@ __webpack_require__.r(__webpack_exports__);
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
     Layout: _Pages_Layout__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: {
-    bookmarks: {
-      type: Array
-    }
-  },
   data: function data() {
     return {
       newTitle: '',
-      newUrl: ''
+      newUrl: '',
+      status: null,
+      cancelToken: null
     };
+  },
+  props: {
+    bookmarks: {
+      type: Array
+    },
+    errors: {
+      type: Object
+    }
+  },
+  computed: {
+    bookmarkError: function bookmarkError() {
+      return this.$page.props.errors['addBookmark'] || {};
+    }
+  },
+  methods: {
+    addBookmark: function addBookmark(event) {
+      var _this = this;
+
+      this.$inertia.visit(route('bookmark.store'), {
+        method: 'post',
+        //POSTメソッドで送信
+        data: {
+          title: this.newTitle,
+          //送信データを指定
+          url: this.newUrl
+        },
+        errorBag: 'addBookmark',
+        //エラーバッグ名を指定
+        preserveState: function preserveState(page) {
+          //フォームの内容を保持するかどうか
+          return Object.keys(page.props.errors).length != 0; //エラーがあればフォームの内容を保持する
+        },
+        preserveScroll: true,
+        //スクロールポジションを維持する
+        onCancelToken: function onCancelToken(cancelToken) {
+          return _this.cancelToken = cancelToken;
+        },
+        //キャンセルトークンが発行されたらキャンセルトークンを保存
+        onBefore: function onBefore(visit) {
+          return confirm('追加しますか？');
+        },
+        //リクエスト送信前に確認ダイアログを表示し、その結果に応じて続行・キャンセル
+        onStart: function onStart(visit) {
+          console.log(visit);
+        },
+        //リクエスト開始時に
+        onProgress: function onProgress(progress) {
+          console.log(progress);
+        },
+        //リクエスト進行中
+        onSuccess: function onSuccess(page) {
+          console.log(page);
+        },
+        //リクエスト成功時
+        onError: function onError(errors) {
+          console.log(errors);
+        },
+        //エラー発生時
+        onCancel: function onCancel() {
+          console.log('onCancel');
+        },
+        //リクエストキャンセル時
+        onFinish: function onFinish(visit) {
+          _this.cancelToken = null;
+          console.log('onFinish');
+        } //リクエスト完了時。成功、エラー、キャンセルそれぞれのコールバック実行後に呼び出される
+
+      });
+    }
   }
 });
 
@@ -24544,7 +24610,7 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_8 = {
-  "class": "flex w-60"
+  "class": "flex w-full"
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -24557,29 +24623,32 @@ var _hoisted_10 = {
   "class": "w-40"
 };
 var _hoisted_11 = {
-  "class": "flex w-60"
+  key: 0,
+  "class": "p-1 m-1 text-sm text-red-400"
+};
+var _hoisted_12 = {
+  "class": "flex w-full"
 };
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "w-20 text-right bg-gray-200 text-sm p-1 m-1"
 }, "URL", -1
 /* HOISTED */
 );
 
-var _hoisted_13 = {
+var _hoisted_14 = {
   "class": "w-40"
 };
-
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("ブックマーク追加");
-
+var _hoisted_15 = {
+  key: 0,
+  "class": "p-1 m-1 text-sm text-red-400"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
 
   var _component_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("layout");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_layout, {
-    title: "ブックマーク一覧"
-  }, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_layout, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
         href: _ctx.route('bookmark.index'),
@@ -24626,38 +24695,39 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return _ctx.newTitle = $event;
         }),
         size: "15",
-        "class": "p-1 m-1 text-sm w-full"
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.newTitle]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["p-1 m-1 text-sm w-full", {
+          'border-red-300': $options.bookmarkError['title']
+        }])
+      }, null, 2
+      /* CLASS */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.newTitle]])]), $options.bookmarkError['title'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.bookmarkError['title']), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         name: "newUrl",
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
           return _ctx.newUrl = $event;
         }),
         size: "15",
-        "class": "p-1 m-1 text-sm w-full"
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.newUrl]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        as: "button",
-        method: "post",
-        href: _ctx.route('bookmark.store'),
-        data: {
-          title: _ctx.newTitle,
-          url: _ctx.newUrl
-        },
-        "class": "border border-gray-400 m-1 p-1 text-sm"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_14];
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["p-1 m-1 text-sm w-full", {
+          'border-red-300': $options.bookmarkError['url']
+        }])
+      }, null, 2
+      /* CLASS */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.newUrl]])]), $options.bookmarkError['url'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.bookmarkError['url']), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        onClick: _cache[2] || (_cache[2] = function () {
+          return $options.addBookmark && $options.addBookmark.apply($options, arguments);
         }),
-        _: 1
-        /* STABLE */
-
-      }, 8
-      /* PROPS */
-      , ["href", "data"])];
+        "class": "border border-gray-400 m-1 p-1 text-sm"
+      }, "ブックマーク追加"), _ctx.cancelToken ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+        key: 0,
+        onClick: _cache[3] || (_cache[3] = function ($event) {
+          return _ctx.cancelToken.cancel();
+        }),
+        "class": "border border-red-300 m-1 p-1 text-sm"
+      }, "キャンセル")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1
     /* STABLE */
