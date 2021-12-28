@@ -20662,9 +20662,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    InertiaLink: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.InertiaLink,
-    Layout: _Pages_Layout__WEBPACK_IMPORTED_MODULE_1__["default"]
+    InertiaLink: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.InertiaLink // components:からLayoutを削除
+    //Layout,
+
   },
+  //layoutプロパティを追加
+  layout: _Pages_Layout__WEBPACK_IMPORTED_MODULE_1__["default"],
   props: {
     bookmarks: {
       type: Array
@@ -24523,40 +24526,29 @@ var _hoisted_4 = ["href"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
-  var _component_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("layout");
-
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_layout, {
-    title: "ブックマーク一覧"
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
+    href: _ctx.route('bookmark.index'),
+    "class": "text-blue-700 underline"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
-        href: _ctx.route('bookmark.index'),
-        "class": "text-blue-700 underline"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_2];
-        }),
-        _: 1
-        /* STABLE */
-
-      }, 8
-      /* PROPS */
-      , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bookmarks, function (bookmark) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-          href: bookmark.url,
-          target: "_blank",
-          "class": "text-blue-700"
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(bookmark.title), 9
-        /* TEXT, PROPS */
-        , _hoisted_4)]);
-      }), 256
-      /* UNKEYED_FRAGMENT */
-      ))])];
+      return [_hoisted_2];
     }),
     _: 1
     /* STABLE */
 
-  });
+  }, 8
+  /* PROPS */
+  , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bookmarks, function (bookmark) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      href: bookmark.url,
+      target: "_blank",
+      "class": "text-blue-700"
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(bookmark.title), 9
+    /* TEXT, PROPS */
+    , _hoisted_4)]);
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  ))])]);
 }
 
 /***/ }),
@@ -24671,6 +24663,22 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("ブックマーク一覧");
 
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "text",
+  name: "search",
+  size: "15",
+  "class": "p-1 m-1 text-sm"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
+  "class": "border border-gray-400 m-1 p-1 text-sm"
+}, "ブックマーク検索", -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_inertia_head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-head");
 
@@ -24712,7 +24720,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")])], 64
+  , ["href"]), _hoisted_5, _hoisted_6]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("article", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")])], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -25975,9 +25983,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 /* harmony import */ var _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/progress */ "./node_modules/@inertiajs/progress/dist/index.js");
+/* harmony import */ var _Pages_Layout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Pages/Layout */ "./resources/js/Pages/Layout.vue");
 var _window$document$getE;
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -25990,6 +26000,15 @@ var appName = ((_window$document$getE = window.document.getElementsByTagName('ti
   resolve: function resolve(name) {
     return __webpack_require__("./resources/js/Pages sync recursive ^\\.\\/.*\\.vue$")("./".concat(name, ".vue"));
   },
+  // デフォルトレイアウトを使う場合この下のように書き換え
+
+  /*
+  resolve: name => {
+      const page = require(`./Pages/${name}`).default
+      page.layout = page.layout || Layout
+      return page
+  },
+  */
   setup: function setup(_ref) {
     var el = _ref.el,
         app = _ref.app,
