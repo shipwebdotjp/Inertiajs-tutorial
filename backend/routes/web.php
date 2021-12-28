@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,4 @@ Route::get('/Bookmark',[App\Http\Controllers\BookmarkController::class, 'index']
 Route::get('/Bookmark/search/{queryWord}',[App\Http\Controllers\BookmarkController::class, 'search'])->where('queryWord', '.*')->name('bookmark.search');
 Route::post('/Bookmark/store',[App\Http\Controllers\BookmarkController::class, 'store'])->name('bookmark.store');
 Route::delete('/Bookmark/delete/{id}',[App\Http\Controllers\BookmarkController::class, 'destroy'])->name('bookmark.delete');
+Route::resource('/Upload',UploadController::class);
